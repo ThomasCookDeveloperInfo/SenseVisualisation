@@ -7,7 +7,7 @@ var Visualiser = function() {
 
 // Draws the passed timeSet
 // If already has a timeSet, then animate between old and new
-Visualiser.prototype.DrawDiscreteTimeSet(discreteTimeSet) {
+Visualiser.prototype.DrawDiscreteTimeSet = function(discreteTimeSet) {
   if (this.currentTimeSet === null) {
     this.currentTimeSet = discreteTimeSet
   } else {

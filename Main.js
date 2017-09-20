@@ -1,73 +1,41 @@
-var foodPool;
-var poisonPool;
-var creaturePool;
-var canvas;
+// Reference to the canvas element
+// So we can pass it to draw functions
+var canvas
+var dataSetManager
+var visualiser
 
-var debugButton;
-var debugging;
-var helpButton;
-var helpText;
-var paused;
-var resetButton;
-var maxSpeedInput;
-var maxSteeringForceInput;
-
+// Setup the simulation
 function setup() {
-  debugging = false;
-  paused = false;
+  // Setup canvas and attach to parent
+  canvas = createCanvas(window.innerWidth, window.innerHeight)
+  canvas.parent("parent")
 
-  canvas = createCanvas(window.innerWidth, window.innerHeight);
-  canvas.parent("parent");
+  // Mock out some dummy connect data
+  var date1 = new Date()
+  var date2 = new Date()
+  var dummyDataSet = []
+  dummyDataSet.push({guid: uuidv4(), time: date1})
+  dummyDataSet.push({guid: uuidv4(), time: date1})
+  dummyDataSet.push({guid: uuidv4(), time: date2})
+  dummyDataSet.push({guid: uuidv4(), time: date2})
 
-  maxSpeedInput = addInput("MaxSpeed", "number", 3);
-  maxSteeringForceInput = addInput("MaxSteer", "number", 0.04);
-  reset();
+  // Create a data set manager
+  dataSetManager = new DataSetManager(dummyDataSet)
+
+  console.log(dataSetManager.CurrentTimeSet().GetDataPoints())
+  dataSetManager.StepForward()
+  console.log(dataSetManager.CurrentTimeSet().GetDataPoints())
+
+  // Resets the state of the simulation
+  reset()
 }
 
+// Draws the simulation
 function draw() {
-  background(51);
-  foodPool.Draw(color('green'));
-  poisonPool.Draw(color('red'));
-  creaturePool.UpdatePhysics(foodPool, poisonPool);
-  creaturePool.Draw(debugging);
+  background(51)
 }
 
+// Resets the simulation state
 function reset() {
-  foodPool = new ParticlePool();
-  foodPool.IsPoison = false;
-  for (var i = 0; i < 250; i++) {
-    foodPool.AddParticle();
-  }
-  poisonPool = new ParticlePool();
-  poisonPool.IsPoison = true;
-  for (var i = 0; i < 250; i++) {
-    poisonPool.AddParticle();
-  }
-  creaturePool = new CreaturePool();
-  for (var i = 0; i < 10; i++) {
-    creaturePool.AddCreature(maxSpeedInput.value, maxSteeringForceInput.value);
-  }
-}
-
-function addInput(inputName, type, value) {
-  //Create an input type dynamically.
-  var element = document.createElement("input");
-
-  //Create Labels
-  var label = document.createElement("Label");
-  label.innerHTML = inputName;
-  label.classList.add(inputName+"-label");
-
-  //Assign different attributes to the element.
-  element.setAttribute("type", type);
-  element.setAttribute("value", value);
-  element.classList.add(inputName);
-
-  // 'foobar' is the div id, where new fields are to be added
-  var parent = document.getElementById("parent");
-
-  //Append the element in page (in span).
-  parent.appendChild(label);
-  parent.appendChild(element);
-  return element;
+  // Do reset of state in here
 }
