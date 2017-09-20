@@ -19,24 +19,6 @@ function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent("parent");
 
-  helpButton = createButton("Show Help");
-  helpButton.addClass("help-button");
-  helpButton.parent('parent');
-  helpButton.mousePressed(toggleHelp);
-
-  debugButton = createButton("Show Debug Info");
-  debugButton.addClass("debug-button");
-  debugButton.parent('parent');
-  debugButton.mousePressed(toggleDebug);
-
-  resetButton = createButton("Reset");
-  resetButton.addClass("reset-button");
-  resetButton.parent('parent');
-  resetButton.mousePressed(reset);
-
-  helpText = document.getElementsByClassName("help")[0];
-  helpText.style.visibility = "hidden";
-
   maxSpeedInput = addInput("MaxSpeed", "number", 3);
   maxSteeringForceInput = addInput("MaxSteer", "number", 0.04);
   reset();
@@ -48,16 +30,6 @@ function draw() {
   poisonPool.Draw(color('red'));
   creaturePool.UpdatePhysics(foodPool, poisonPool);
   creaturePool.Draw(debugging);
-}
-
-function toggleDebug() {
-  debugging = !debugging;
-  if (debugging) {
-      debugButton.elt.innerText = "Hide Debug Info";
-  }
-  else {
-      debugButton.elt.innerText = "Show Debug Info";
-  }
 }
 
 function reset() {
@@ -74,18 +46,6 @@ function reset() {
   creaturePool = new CreaturePool();
   for (var i = 0; i < 10; i++) {
     creaturePool.AddCreature(maxSpeedInput.value, maxSteeringForceInput.value);
-  }
-}
-
-function toggleHelp() {
-  paused = !paused;
-  if (paused) {
-      helpText.style.visibility = "visible";
-      helpButton.elt.innerText = "Hide Help";
-  }
-  else {
-      helpText.style.visibility = "hidden";
-      helpButton.elt.innerText = "Show Help";
   }
 }
 
