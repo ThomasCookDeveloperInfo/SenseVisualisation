@@ -26,6 +26,9 @@ function setup() {
   dataSetManager.StepForward()
   console.log(dataSetManager.CurrentTimeSet().GetDataPoints())
 
+  // Create the visualiser
+  visualiser = new Visualiser()
+
   // Resets the state of the simulation
   reset()
 }
@@ -33,6 +36,7 @@ function setup() {
 // Draws the simulation
 function draw() {
   background(51)
+  visualiser.DrawDiscreteTimeSet(dataSetManager.CurrentTimeSet())
 }
 
 // Resets the simulation state

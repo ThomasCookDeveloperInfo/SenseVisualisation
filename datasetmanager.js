@@ -16,7 +16,7 @@ var DataSetManager = function(dataset) {
   // Map the input dataset to discreteTimeSets
   dataset.map(function(data) {
     // Convert data to data point
-    var dataPoint = new DataPoint(data.time, data.guid)
+    var dataPoint = new GraphicalDataPoint(data.time, data.guid)
 
     // See if we have a time set for this data
     var existingTimeSet = discreteTimeSets.find(TimeSetContainsTime(data))
